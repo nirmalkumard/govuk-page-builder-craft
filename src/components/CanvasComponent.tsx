@@ -14,6 +14,8 @@ const CanvasComponent: React.FC<CanvasComponentProps> = ({ component, index }) =
   const ref = useRef<HTMLDivElement>(null);
   const { removeComponent, selectComponent, selectedComponent, moveComponent } = usePageStore();
 
+  console.log('🎭 CanvasComponent: Rendering component:', component.type, component.id);
+
   const [{ isDragging }, drag] = useDrag({
     type: 'canvas-component',
     item: { index },
@@ -39,120 +41,145 @@ const CanvasComponent: React.FC<CanvasComponentProps> = ({ component, index }) =
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     selectComponent(component);
+    console.log('👆 CanvasComponent: Selected component:', component.id);
   };
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
     removeComponent(component.id);
+    console.log('🗑️ CanvasComponent: Deleted component:', component.id);
   };
 
   const renderComponent = () => {
     const { type, props } = component;
+    console.log('🎨 CanvasComponent: Rendering', type, 'with props:', props);
 
-    switch (type) {
-      case 'button':
-        return (
-          <button className="bg-green-600 text-white py-2 px-4 font-bold border-none cursor-pointer hover:bg-green-700">
-            {props.text || 'Button'}
-          </button>
-        );
+    try {
+      switch (type) {
+        case 'button':
+          return (
+            <button className="bg-green-600 text-white py-2 px-4 font-bold border-none cursor-pointer hover:bg-green-700 rounded">
+              {props.text || 'Button'}
+            </button>
+          );
 
-      case 'input':
-        return (
-          <div className="mb-4">
-            <label className="block text-lg font-bold mb-1 text-gray-900">
-              {props.label || 'Label'}
-            </label>
-            {props.hint && (
-              <div className="text-gray-600 text-sm mb-2">{props.hint}</div>
-            )}
-            <input
-              type="text"
-              className="border-2 border-gray-900 p-2 w-full text-lg"
-              name={props.name}
-              required={props.required}
-              readOnly
-            />
-          </div>
-        );
-
-      case 'textarea':
-        return (
-          <div className="mb-4">
-            <label className="block text-lg font-bold mb-1 text-gray-900">
-              {props.label || 'Label'}
-            </label>
-            {props.hint && (
-              <div className="text-gray-600 text-sm mb-2">{props.hint}</div>
-            )}
-            <textarea
-              className="border-2 border-gray-900 p-2 w-full text-lg"
-              rows={5}
-              name={props.name}
-              required={props.required}
-              readOnly
-            />
-          </div>
-        );
-
-      case 'radios':
-        return (
-          <div className="mb-4">
-            <fieldset>
-              <legend className="text-lg font-bold mb-3 text-gray-900">
-                {props.label || 'Select an option'}
-              </legend>
+        case 'input':
+          return (
+            <div className="mb-4">
+              <label className="block text-lg font-bold mb-1 text-gray-900">
+                {props.label || 'Label'}
+                {props.required && <span className="text-red-600 ml-1">*</span>}
+              </label>
               {props.hint && (
-                <div className="text-gray-600 text-sm mb-3">{props.hint}</div>
+                <div className="text-gray-600 text-sm mb-2">{props.hint}</div>
               )}
-              <div className="space-y-2">
-                {(props.options || ['Option 1', 'Option 2']).map((option, idx) => (
-                  <div key={idx} className="flex items-center">
-                    <input
-                      type="radio"
-                      name={props.name || component.id}
-                      value={option}
-                      className="mr-3"
-                      disabled
-                    />
-                    <label className="text-lg text-gray-900">{option}</label>
-                  </div>
-                ))}
-              </div>
-            </fieldset>
-          </div>
-        );
+              <input
+                type="text"
+                className="border-2 border-gray-900 p-2 w-full text-lg max-w-md"
+                name={props.name || 'input'}
+                placeholder={props.placeholder}
+                required={props.required}
+                readOnly
+              />
+            </div>
+          );
 
-      case 'checkboxes':
-        return (
-          <div className="mb-4">
-            <fieldset>
-              <legend className="text-lg font-bold mb-3 text-gray-900">
-                {props.label || 'Select options'}
-              </legend>
+        case 'textarea':
+          return (
+            <div className="mb-4">
+              <label className="block text-lg font-bold mb-1 text-gray-900">
+                {props.label || 'Label'}
+                {props.required && <span className="text-red-600 ml-1">*</span>}
+              </label>
               {props.hint && (
-                <div className="text-gray-600 text-sm mb-3">{props.hint}</div>
+                <div className="text-gray-600 text-sm mb-2">{props.hint}</div>
               )}
-              <div className="space-y-2">
-                {(props.options || ['Option 1', 'Option 2']).map((option, idx) => (
-                  <div key={idx} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      name={props.name || component.id}
-                      value={option}
-                      className="mr-3"
-                      disabled
-                    />
-                    <label className="text-lg text-gray-900">{option}</label>
-                  </div>
-                ))}
-              </div>
-            </fieldset>
-          </div>
-        );
+              <textarea
+                className="border-2 border-gray-900 p-2 w-full text-lg max-w-md"
+                rows={5}
+                name={props.name || 'textarea'}
+                placeholder={props.placeholder}
+                required={props.required}
+                readOnly
+              />
+            </div>
+          );
 
-      default:
-        return <div>Unknown component type</div>;
+        case 'radios':
+          const radioOptions = Array.isArray(props.options) ? props.options : ['Option 1', 'Option 2'];
+          return (
+            <div className="mb-4">
+              <fieldset>
+                <legend className="text-lg font-bold mb-3 text-gray-900">
+                  {props.label || 'Select an option'}
+                  {props.required && <span className="text-red-600 ml-1">*</span>}
+                </legend>
+                {props.hint && (
+                  <div className="text-gray-600 text-sm mb-3">{props.hint}</div>
+                )}
+                <div className="space-y-2">
+                  {radioOptions.map((option, idx) => (
+                    <div key={idx} className="flex items-center">
+                      <input
+                        type="radio"
+                        name={props.name || component.id}
+                        value={option}
+                        className="mr-3 w-4 h-4"
+                        disabled
+                      />
+                      <label className="text-lg text-gray-900">{option}</label>
+                    </div>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+          );
+
+        case 'checkboxes':
+          const checkboxOptions = Array.isArray(props.options) ? props.options : ['Option 1', 'Option 2'];
+          return (
+            <div className="mb-4">
+              <fieldset>
+                <legend className="text-lg font-bold mb-3 text-gray-900">
+                  {props.label || 'Select options'}
+                  {props.required && <span className="text-red-600 ml-1">*</span>}
+                </legend>
+                {props.hint && (
+                  <div className="text-gray-600 text-sm mb-3">{props.hint}</div>
+                )}
+                <div className="space-y-2">
+                  {checkboxOptions.map((option, idx) => (
+                    <div key={idx} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name={`${props.name || component.id}[]`}
+                        value={option}
+                        className="mr-3 w-4 h-4"
+                        disabled
+                      />
+                      <label className="text-lg text-gray-900">{option}</label>
+                    </div>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+          );
+
+        default:
+          console.warn('⚠️ CanvasComponent: Unknown component type:', type);
+          return (
+            <div className="p-4 border border-red-300 bg-red-50 text-red-700 rounded">
+              Unknown component type: {type}
+            </div>
+          );
+      }
+    } catch (error) {
+      console.error('❌ CanvasComponent: Error rendering component:', error);
+      return (
+        <div className="p-4 border border-red-300 bg-red-50 text-red-700 rounded">
+          Error rendering {type} component
+        </div>
+      );
     }
   };
 
@@ -178,6 +205,11 @@ const CanvasComponent: React.FC<CanvasComponentProps> = ({ component, index }) =
           </Button>
         </div>
       )}
+      
+      {/* Debug info for development */}
+      <div className="absolute bottom-1 left-1 text-xs text-gray-400 bg-white px-1 rounded opacity-50">
+        {component.type}#{component.id.slice(-4)}
+      </div>
     </div>
   );
 };
