@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { usePageStore } from '../store/pageStore';
@@ -9,7 +8,7 @@ const Canvas = () => {
 
   const [{ isOver }, drop] = useDrop({
     accept: 'component',
-    drop: (item: { type: string }) => {
+    drop: (item: { type: 'button' | 'input' | 'textarea' | 'radios' | 'checkboxes' }) => {
       const defaultProps = {
         button: { text: 'Button' },
         input: { label: 'Label', name: 'input-field' },
@@ -20,7 +19,7 @@ const Canvas = () => {
 
       addComponent({
         type: item.type,
-        props: defaultProps[item.type as keyof typeof defaultProps] || {},
+        props: defaultProps[item.type] || {},
       });
     },
     collect: (monitor) => ({
