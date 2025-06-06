@@ -7,7 +7,7 @@ import ChatBot from './ChatBot';
 
 const PageBuilderWithChat = () => {
   return (
-    <div className="h-[calc(100vh-140px)] flex overflow-hidden">
+    <div className="h-screen flex overflow-hidden">
       {/* Left Panel - Component Library & ChatBot */}
       <div className="w-80 bg-white border-r border-gray-300 flex flex-col">
         <div className="flex-1 flex flex-col">

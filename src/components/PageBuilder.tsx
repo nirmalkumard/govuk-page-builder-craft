@@ -6,7 +6,7 @@ import PropertiesPanel from './PropertiesPanel';
 
 const PageBuilder = () => {
   return (
-    <div className="h-[calc(100vh-140px)] flex overflow-hidden">
+    <div className="h-screen flex overflow-hidden">
       {/* Left Panel - Component Library */}
       <div className="w-80 bg-white border-r border-gray-300 flex flex-col">
         <div className="p-4 border-b border-gray-300">

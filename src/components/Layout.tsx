@@ -1,7 +1,5 @@
 
 import React from 'react';
-import GovUKHeader from './GovUKHeader';
-import GovUKFooter from './GovUKFooter';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,12 +7,10 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <GovUKHeader />
-      <main className="flex-1 pb-8">
+    <div className="min-h-screen">
+      <main className="h-screen">
         {children}
       </main>
-      <GovUKFooter />
     </div>
   );
 };
