@@ -2,15 +2,16 @@
 import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import PageBuilder from '../components/PageBuilder';
+import Layout from '../components/Layout';
+import PageBuilderWithChat from '../components/PageBuilderWithChat';
 
 const Index = () => {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="min-h-screen bg-gray-50">
-        <PageBuilder />
-      </div>
-    </DndProvider>
+    <Layout>
+      <DndProvider backend={HTML5Backend}>
+        <PageBuilderWithChat />
+      </DndProvider>
+    </Layout>
   );
 };
 
