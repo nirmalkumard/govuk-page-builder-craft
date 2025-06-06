@@ -3,12 +3,13 @@ import React from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import Canvas from './Canvas';
 import PropertiesPanel from './PropertiesPanel';
-import Header from './Header';
+import GovUKHeader from './GovUKHeader';
+import GovUKFooter from './GovUKFooter';
 
 const PageBuilder = () => {
   return (
     <div className="h-screen flex flex-col">
-      <Header />
+      <GovUKHeader />
       <div className="flex-1 flex overflow-hidden">
         {/* Left Panel - Component Library */}
         <div className="w-80 bg-white border-r border-gray-300 flex flex-col">
@@ -37,6 +38,7 @@ const PageBuilder = () => {
           <PropertiesPanel />
         </div>
       </div>
+      <GovUKFooter />
     </div>
   );
 };

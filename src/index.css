@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -99,5 +100,200 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* GOV.UK Header and Footer Styles */
+.govuk-header {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #fff;
+  background: #0b0c0c;
+  border-bottom: 10px solid #ffdd00;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.govuk-header__container {
+  position: relative;
+  margin-right: 15px;
+  margin-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #2e3133;
+}
+
+.govuk-header__logo {
+  margin-bottom: 10px;
+  padding-right: 50px;
+}
+
+.govuk-header__link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.govuk-header__link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.1578em;
+}
+
+.govuk-header__logotype {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+.govuk-header__logotype-crown {
+  margin-right: 1px;
+  fill: currentColor;
+  vertical-align: top;
+}
+
+.govuk-header__logotype-text {
+  font-size: 30px;
+  font-weight: 700;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: top;
+}
+
+.govuk-header__service-name {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+.govuk-header__navigation {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.govuk-header__navigation-list {
+  margin: 0;
+  margin-bottom: -5px;
+  padding: 0;
+  list-style: none;
+}
+
+.govuk-header__navigation-item {
+  padding: 5px 0;
+  border-bottom: 1px solid #2e3133;
+}
+
+.govuk-header__menu-button {
+  display: none;
+}
+
+.govuk-footer {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  padding-top: 25px;
+  padding-bottom: 15px;
+  border-top: 1px solid #b1b4b6;
+  color: #0b0c0c;
+  background: #f3f2f1;
+}
+
+.govuk-footer__meta {
+  display: flex;
+  margin-right: -15px;
+  margin-left: -15px;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: center;
+}
+
+.govuk-footer__meta-item {
+  margin-right: 15px;
+  margin-bottom: 25px;
+  margin-left: 15px;
+}
+
+.govuk-footer__meta-item--grow {
+  flex: 1;
+}
+
+.govuk-footer__inline-list {
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding: 0;
+  list-style: none;
+}
+
+.govuk-footer__inline-list-item {
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 5px;
+}
+
+.govuk-footer__link {
+  color: #0b0c0c;
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.1578em;
+}
+
+.govuk-footer__link:hover {
+  color: #004085;
+}
+
+.govuk-footer__licence-logo {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: top;
+  forced-color-adjust: auto;
+}
+
+.govuk-footer__licence-description {
+  display: inline-block;
+}
+
+.govuk-footer__copyright-logo {
+  display: inline-block;
+  min-width: 125px;
+  padding-top: 112px;
+  background-image: url(https://frontend.design-system.service.gov.uk/frontend/assets/images/govuk-crest-2x.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0%;
+  background-size: 125px 102px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.govuk-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+.govuk-width-container {
+  max-width: 960px;
+  margin: 0 15px;
+}
+
+@media (min-width: 1020px) {
+  .govuk-width-container {
+    margin: 0 auto;
   }
 }
