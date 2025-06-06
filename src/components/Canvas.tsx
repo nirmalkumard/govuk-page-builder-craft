@@ -11,9 +11,8 @@ const Canvas = () => {
 
   const [{ isOver }, drop] = useDrop({
     accept: 'component',
-    drop: (item: { type: string }) => {
+    drop: (item: { type: 'button' | 'input' | 'textarea' | 'radios' | 'checkboxes' }) => {
       const newComponent = {
-        id: Date.now().toString(),
         type: item.type,
         props: getDefaultProps(item.type),
       };
@@ -24,7 +23,7 @@ const Canvas = () => {
     }),
   });
 
-  const getDefaultProps = (type: string) => {
+  const getDefaultProps = (type: 'button' | 'input' | 'textarea' | 'radios' | 'checkboxes') => {
     switch (type) {
       case 'button':
         return { text: 'Button', variant: 'primary' };
@@ -64,8 +63,8 @@ const Canvas = () => {
               </div>
             ) : (
               <div className="space-y-6">
-                {components.map((component) => (
-                  <CanvasComponent key={component.id} component={component} />
+                {components.map((component, index) => (
+                  <CanvasComponent key={component.id} component={component} index={index} />
                 ))}
               </div>
             )}
