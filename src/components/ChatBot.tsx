@@ -62,7 +62,7 @@ const ChatBot = () => {
         { type: 'input', props: { label: 'First name', name: 'first-name', required: true } },
         { type: 'input', props: { label: 'Last name', name: 'last-name', required: true } },
         { type: 'input', props: { label: 'Date of birth', name: 'date-of-birth', hint: 'For example, 27 3 1980' } },
-        { type: 'input', props: { label: 'National Insurance number', name: 'ni-number', hint: 'It's on your National Insurance card, benefit letter, payslip or P60' } },
+        { type: 'input', props: { label: 'National Insurance number', name: 'ni-number', hint: 'It\'s on your National Insurance card, benefit letter, payslip or P60' } },
         { type: 'radios', props: { label: 'What is your nationality?', name: 'nationality', options: ['British', 'Irish', 'Citizen of another country'] } },
         { type: 'button', props: { text: 'Continue' } }
       );
