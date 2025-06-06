@@ -27,110 +27,103 @@ const ChatBot = () => {
   const { addComponent, clearComponents, components } = usePageStore();
 
   const processPrompt = (prompt: string) => {
-    console.log('🤖 Processing prompt:', prompt);
-    const lowerPrompt = prompt.toLowerCase();
+    console.log('🤖 ChatBot: Processing prompt:', prompt);
+    const lowerPrompt = prompt.toLowerCase().trim();
     
     // Clear existing components for new builds
     if (lowerPrompt.includes('create') || lowerPrompt.includes('build') || lowerPrompt.includes('new')) {
-      console.log('🧹 Clearing existing components');
+      console.log('🧹 ChatBot: Clearing existing components');
       clearComponents();
     }
 
     const componentsToAdd = [];
 
-    // Enhanced contact form pattern
-    if ((lowerPrompt.includes('contact') && lowerPrompt.includes('form')) || 
-        lowerPrompt.includes('contact page')) {
-      console.log('📝 Creating contact form');
+    // Enhanced pattern matching with more specific checks
+    if (lowerPrompt.includes('contact form') || lowerPrompt.includes('contact page')) {
+      console.log('📝 ChatBot: Creating contact form');
       componentsToAdd.push(
-        { type: 'input', props: { label: 'Full name', name: 'full-name', required: true } },
-        { type: 'input', props: { label: 'Email address', name: 'email', required: true } },
-        { type: 'input', props: { label: 'Phone number', name: 'phone', hint: 'Optional' } },
-        { type: 'textarea', props: { label: 'Message', name: 'message', required: true, hint: 'Please provide details of your enquiry' } },
-        { type: 'button', props: { text: 'Send message' } }
+        { type: 'input' as const, props: { label: 'Full name', name: 'full-name', required: true, placeholder: 'Enter your full name' } },
+        { type: 'input' as const, props: { label: 'Email address', name: 'email', required: true, placeholder: 'Enter your email address' } },
+        { type: 'input' as const, props: { label: 'Phone number', name: 'phone', hint: 'Optional', placeholder: 'Enter your phone number' } },
+        { type: 'textarea' as const, props: { label: 'Message', name: 'message', required: true, hint: 'Please provide details of your enquiry', placeholder: 'Enter your message' } },
+        { type: 'button' as const, props: { text: 'Send message', variant: 'primary' } }
       );
     }
-
-    // Enhanced feedback form pattern
-    else if (lowerPrompt.includes('feedback') || lowerPrompt.includes('survey') || 
-             lowerPrompt.includes('satisfaction')) {
-      console.log('📊 Creating feedback form');
+    else if (lowerPrompt.includes('feedback') || lowerPrompt.includes('survey') || lowerPrompt.includes('satisfaction')) {
+      console.log('📊 ChatBot: Creating feedback form');
       componentsToAdd.push(
-        { type: 'radios', props: { 
+        { type: 'radios' as const, props: { 
           label: 'How satisfied were you with this service?', 
           name: 'satisfaction', 
+          required: true,
           options: ['Very satisfied', 'Satisfied', 'Neither satisfied nor dissatisfied', 'Dissatisfied', 'Very dissatisfied'] 
         }},
-        { type: 'textarea', props: { 
+        { type: 'textarea' as const, props: { 
           label: 'How could we improve this service?', 
           name: 'improvements', 
-          hint: 'Do not include personal or financial information' 
+          hint: 'Do not include personal or financial information',
+          placeholder: 'Enter your suggestions'
         }},
-        { type: 'checkboxes', props: { 
+        { type: 'checkboxes' as const, props: { 
           label: 'What did you use this service for?', 
           name: 'purpose', 
           options: ['Personal use', 'Business use', 'Research', 'Other'] 
         }},
-        { type: 'button', props: { text: 'Submit feedback' } }
+        { type: 'button' as const, props: { text: 'Submit feedback', variant: 'primary' } }
       );
     }
-
-    // Enhanced application form pattern
-    else if ((lowerPrompt.includes('application') && lowerPrompt.includes('form')) ||
-             lowerPrompt.includes('apply') || lowerPrompt.includes('registration')) {
-      console.log('📄 Creating application form');
+    else if (lowerPrompt.includes('application form') || lowerPrompt.includes('application') || lowerPrompt.includes('apply') || lowerPrompt.includes('registration')) {
+      console.log('📄 ChatBot: Creating application form');
       componentsToAdd.push(
-        { type: 'input', props: { label: 'First name', name: 'first-name', required: true } },
-        { type: 'input', props: { label: 'Last name', name: 'last-name', required: true } },
-        { type: 'input', props: { label: 'Date of birth', name: 'date-of-birth', hint: 'For example, 27 3 1980' } },
-        { type: 'input', props: { label: 'National Insurance number', name: 'ni-number', hint: 'It\'s on your National Insurance card, benefit letter, payslip or P60' } },
-        { type: 'radios', props: { 
+        { type: 'input' as const, props: { label: 'First name', name: 'first-name', required: true, placeholder: 'Enter your first name' } },
+        { type: 'input' as const, props: { label: 'Last name', name: 'last-name', required: true, placeholder: 'Enter your last name' } },
+        { type: 'input' as const, props: { label: 'Date of birth', name: 'date-of-birth', hint: 'For example, 27 3 1980', placeholder: 'DD MM YYYY' } },
+        { type: 'input' as const, props: { label: 'National Insurance number', name: 'ni-number', hint: 'It\'s on your National Insurance card, benefit letter, payslip or P60', placeholder: 'QQ 12 34 56 C' } },
+        { type: 'radios' as const, props: { 
           label: 'What is your nationality?', 
-          name: 'nationality', 
+          name: 'nationality',
+          required: true, 
           options: ['British', 'Irish', 'Citizen of another country'] 
         }},
-        { type: 'button', props: { text: 'Continue' } }
+        { type: 'button' as const, props: { text: 'Continue', variant: 'primary' } }
       );
     }
-
-    // Individual component patterns with better extraction
-    else if (lowerPrompt.includes('button')) {
-      console.log('🔘 Creating button');
-      const buttonText = extractQuotedText(prompt) || 'Button';
-      componentsToAdd.push({ type: 'button', props: { text: buttonText } });
+    else if (lowerPrompt.includes('submit button') || lowerPrompt.includes('add button') || lowerPrompt.includes('button')) {
+      console.log('🔘 ChatBot: Creating button');
+      const buttonText = extractQuotedText(prompt) || 'Submit';
+      componentsToAdd.push({ type: 'button' as const, props: { text: buttonText, variant: 'primary' } });
     }
-
     else if (lowerPrompt.includes('input') || lowerPrompt.includes('text field')) {
-      console.log('📝 Creating input field');
+      console.log('📝 ChatBot: Creating input field');
       const label = extractQuotedText(prompt) || 'Text input';
       componentsToAdd.push({ 
-        type: 'input', 
+        type: 'input' as const, 
         props: { 
           label, 
           name: label.toLowerCase().replace(/\s+/g, '-'),
-          required: lowerPrompt.includes('required')
+          required: lowerPrompt.includes('required'),
+          placeholder: `Enter ${label.toLowerCase()}`
         } 
       });
     }
-
     else if (lowerPrompt.includes('textarea') || lowerPrompt.includes('text area')) {
-      console.log('📄 Creating textarea');
+      console.log('📄 ChatBot: Creating textarea');
       const label = extractQuotedText(prompt) || 'Text area';
       componentsToAdd.push({ 
-        type: 'textarea', 
+        type: 'textarea' as const, 
         props: { 
           label, 
           name: label.toLowerCase().replace(/\s+/g, '-'),
-          required: lowerPrompt.includes('required')
+          required: lowerPrompt.includes('required'),
+          placeholder: `Enter ${label.toLowerCase()}`
         } 
       });
     }
-
     else if (lowerPrompt.includes('radio') || lowerPrompt.includes('single choice')) {
-      console.log('🔘 Creating radio buttons');
+      console.log('🔘 ChatBot: Creating radio buttons');
       const options = extractOptions(prompt) || ['Option 1', 'Option 2', 'Option 3'];
       componentsToAdd.push({ 
-        type: 'radios', 
+        type: 'radios' as const, 
         props: { 
           label: 'Select an option', 
           name: 'radio-group', 
@@ -138,12 +131,11 @@ const ChatBot = () => {
         } 
       });
     }
-
     else if (lowerPrompt.includes('checkbox') || lowerPrompt.includes('multiple choice')) {
-      console.log('☑️ Creating checkboxes');
+      console.log('☑️ ChatBot: Creating checkboxes');
       const options = extractOptions(prompt) || ['Option 1', 'Option 2', 'Option 3'];
       componentsToAdd.push({ 
-        type: 'checkboxes', 
+        type: 'checkboxes' as const, 
         props: { 
           label: 'Select options', 
           name: 'checkbox-group', 
@@ -152,26 +144,39 @@ const ChatBot = () => {
       });
     }
 
-    // Add components to the page
-    console.log('➕ Adding components to page:', componentsToAdd);
-    componentsToAdd.forEach((component, index) => {
-      console.log(`Adding component ${index + 1}:`, component);
-      addComponent(component);
-    });
+    // Add components with a small delay to ensure proper state updates
+    console.log('➕ ChatBot: Adding components to page:', componentsToAdd.length);
+    
+    if (componentsToAdd.length > 0) {
+      componentsToAdd.forEach((component, index) => {
+        setTimeout(() => {
+          console.log(`Adding component ${index + 1}/${componentsToAdd.length}:`, component);
+          addComponent(component);
+        }, index * 50); // Small delay between additions
+      });
+    }
 
     // Generate response based on what was created
     let response = '';
     if (componentsToAdd.length > 0) {
+      const componentTypes = componentsToAdd.map(c => c.type).join(', ');
       if (componentsToAdd.length === 1) {
         response = `✅ I've added a ${componentsToAdd[0].type} component to your page. You can see it in the preview and customize it using the properties panel.`;
       } else {
-        response = `✅ I've created a page with ${componentsToAdd.length} components for you. You can see the preview and customize each component by selecting it.`;
+        response = `✅ I've created a page with ${componentsToAdd.length} components (${componentTypes}) for you. You can see the preview and customize each component by selecting it.`;
       }
     } else {
-      response = "❓ I didn't understand exactly what you'd like to build. Try being more specific, like:\n• 'Create a contact form'\n• 'Add a submit button'\n• 'Build a feedback survey'\n• 'Make an application form'";
+      response = `❓ I didn't understand exactly what you'd like to build. Try one of these specific commands:
+
+• "Create a contact form" - Builds a complete contact form
+• "Build a feedback survey" - Creates a satisfaction survey  
+• "Make an application form" - Builds a government application form
+• "Add a submit button" - Adds a single button
+
+Or try being more specific about individual components like "add an input field" or "create radio buttons".`;
     }
 
-    console.log('🤖 Generated response:', response);
+    console.log('🤖 ChatBot: Generated response:', response);
     return response;
   };
 
@@ -193,7 +198,7 @@ const ChatBot = () => {
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isProcessing) return;
 
-    console.log('💬 User message:', inputValue);
+    console.log('💬 ChatBot: User message:', inputValue);
     setIsProcessing(true);
 
     const userMessage: Message = {
@@ -219,10 +224,10 @@ const ChatBot = () => {
       setTimeout(() => {
         setMessages(prev => [...prev, botMessage]);
         setIsProcessing(false);
-        console.log('✅ Message processing complete');
-      }, 800);
+        console.log('✅ ChatBot: Message processing complete');
+      }, 1000); // Increased delay to allow components to be added
     } catch (error) {
-      console.error('❌ Error processing message:', error);
+      console.error('❌ ChatBot: Error processing message:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: "❌ Sorry, I encountered an error while processing your request. Please try again.",
@@ -285,7 +290,7 @@ const ChatBot = () => {
                 <div className="flex items-center space-x-2">
                   <Bot className="w-4 h-4" />
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <p className="text-sm">Processing your request...</p>
+                  <p className="text-sm">Creating your page components...</p>
                 </div>
               </div>
             </div>
@@ -311,9 +316,23 @@ const ChatBot = () => {
             {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
           </Button>
         </div>
-        <p className="text-xs text-gray-500 mt-2">
-          Try: "Create a contact form", "Add a feedback survey", or "Build an application form"
-        </p>
+        <div className="mt-2 space-y-1">
+          <p className="text-xs text-gray-500">
+            Try these exact commands:
+          </p>
+          <div className="flex flex-wrap gap-1">
+            {['Create a contact form', 'Build a feedback survey', 'Make an application form', 'Add a submit button'].map((prompt) => (
+              <button
+                key={prompt}
+                onClick={() => setInputValue(prompt)}
+                className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded border text-gray-700"
+                disabled={isProcessing}
+              >
+                {prompt}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
