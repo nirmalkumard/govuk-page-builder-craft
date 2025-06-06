@@ -1,6 +1,6 @@
 
+import React, { useEffect } from 'react';
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 import Layout from '../components/Layout';
 
 const NotFound = () => {
