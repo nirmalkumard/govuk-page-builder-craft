@@ -19,7 +19,18 @@ interface PageStore {
 }
 
 export const usePageStore = create<PageStore>((set, get) => ({
-  components: [],
+  components: [
+    {
+      id: 'name-input-default',
+      type: 'input',
+      props: {
+        label: 'Full name',
+        name: 'full-name',
+        placeholder: 'Enter your full name',
+        required: true
+      }
+    }
+  ],
   selectedComponent: null,
   
   addComponent: (component) => {
