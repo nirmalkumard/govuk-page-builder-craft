@@ -29,6 +29,14 @@ export const usePageStore = create<PageStore>((set, get) => ({
         placeholder: 'Enter your full name',
         required: true
       }
+    },
+    {
+      id: 'continue-button-default',
+      type: 'button',
+      props: {
+        text: 'Continue',
+        variant: 'primary'
+      }
     }
   ],
   selectedComponent: null,
